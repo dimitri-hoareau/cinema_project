@@ -1,0 +1,10 @@
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+cinema_env/
+__pycache__/
+*.pyc
+.env
+.vscode/

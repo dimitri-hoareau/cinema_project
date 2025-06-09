@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-veaskmpqo^ly%h$a@_j2b5gy5t6=0ysa(h^-ple%t&2u+wc(q7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] if DEBUG else []
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -74,8 +75,13 @@ WSGI_APPLICATION = 'cinema.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cinema_db',
+        'USER': 'cinema_user',
+        'PASSWORD': 'cinema_password',
+        'HOST': 'db',
+        # 'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
