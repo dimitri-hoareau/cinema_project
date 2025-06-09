@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'core', 
+    'api', 
 ]
 
 MIDDLEWARE = [
@@ -80,7 +82,6 @@ DATABASES = {
         'USER': 'cinema_user',
         'PASSWORD': 'cinema_password',
         'HOST': 'db',
-        # 'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -126,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'core.User'
