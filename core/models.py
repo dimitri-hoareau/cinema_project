@@ -75,6 +75,7 @@ class Spectator(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField(blank=True) 
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    favorite_movies = models.ManyToManyField('Film', blank=True)
 
     def __str__(self):
         return self.name
