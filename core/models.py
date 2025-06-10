@@ -2,9 +2,12 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class SourceChoices(models.TextChoices):
-    ADMIN = 'admin', 'Admin' 
-    TMDB = 'tmdb', 'TMDb'
+class EvaluationChoices(models.IntegerChoices):
+        ONE = 1, '⭐'
+        TWO = 2, '⭐⭐'
+        THREE = 3, '⭐⭐⭐'
+        FOUR = 4, '⭐⭐⭐⭐'
+        FIVE = 5, '⭐⭐⭐⭐⭐'
 
 class User(AbstractUser):
     """
@@ -17,6 +20,11 @@ class Author(models.Model):
     """
     Author Profile. Contains author-specific information.
     """
+
+    class SourceChoices(models.TextChoices):
+        ADMIN = 'admin', 'Admin' 
+        TMDB = 'tmdb', 'TMDb'
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(max_length=255)
     birth_date = models.DateField(null=True, blank=True)
@@ -28,3 +36,52 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+class Film(models.Model):
+    """
+    Film Profile. Contains film-specific information.
+    """
+
+    class StatusChoices(models.TextChoices):
+        RELEASED = 'released', 'Released'
+        PROJECT = 'project', 'Project'
+
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='films')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    release_date = models.DateField(null=True, blank=True)
+    evaluation = models.IntegerField(
+        choices=EvaluationChoices.choices,
+        null=True, blank=True 
+    )
+    status = models.CharField(
+        max_length=10,
+        choices=StatusChoices.choices,
+    )
+
+    def __str__(self):
+        return self.title
+    
+
+class Spectator(models.Model):
+    """
+    Spectator Profile. Contains spectator-specific information.
+    """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    bio = models.TextField(blank=True) 
+    # avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class AuthorRating(models.Model):
+    """
+    Represents a single rating given by a Spectator to an Author.
+
+    """
+    spectator = models.ForeignKey(Spectator, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='ratings')
+    score = models.IntegerField(
+        choices=EvaluationChoices.choices,
+        null=True, blank=True 
+    )
