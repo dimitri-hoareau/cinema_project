@@ -50,6 +50,10 @@ class Film(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     release_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, 
+        verbose_name="Date de Création"
+    )
     evaluation = models.IntegerField(
         choices=EvaluationChoices.choices,
         null=True, blank=True 
