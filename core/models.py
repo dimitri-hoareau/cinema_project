@@ -69,7 +69,7 @@ class Spectator(models.Model):
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     bio = models.TextField(blank=True) 
-    # avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -81,6 +81,18 @@ class AuthorRating(models.Model):
     """
     spectator = models.ForeignKey(Spectator, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='ratings')
+    score = models.IntegerField(
+        choices=EvaluationChoices.choices,
+        null=True, blank=True 
+    )
+
+class FilmRating(models.Model):
+    """
+    Represents a single rating given by a Spectator to an Film.
+
+    """
+    spectator = models.ForeignKey(Spectator, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='ratings')
     score = models.IntegerField(
         choices=EvaluationChoices.choices,
         null=True, blank=True 
