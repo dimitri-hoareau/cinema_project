@@ -72,6 +72,7 @@ class Spectator(models.Model):
     Spectator Profile. Contains spectator-specific information.
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(max_length=255)
     bio = models.TextField(blank=True) 
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
@@ -90,6 +91,9 @@ class AuthorRating(models.Model):
         null=True, blank=True 
     )
 
+    def __str__(self):
+        return f"Rank of {self.spectator} for {self.author} : {self.get_score_display()}"
+
 class FilmRating(models.Model):
     """
     Represents a single rating given by a Spectator to an Film.
@@ -101,3 +105,5 @@ class FilmRating(models.Model):
         choices=EvaluationChoices.choices,
         null=True, blank=True 
     )
+    def __str__(self):
+        return f"Rank of {self.spectator} for {self.film} : {self.get_score_display()}"
