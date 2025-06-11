@@ -45,6 +45,7 @@ class Film(models.Model):
     class StatusChoices(models.TextChoices):
         RELEASED = 'released', 'Released'
         PROJECT = 'project', 'Project'
+        ARCHIVED = 'archived', 'Archived'
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='films')
     title = models.CharField(max_length=255)
