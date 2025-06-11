@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from core.models import Author, Film, User
-from .serializers import AuthorSerializer, FilmSerializer, SpectatorRegistrationSerializer
+from core.models import Author, Film, User, FilmRating, AuthorRating, Spectator
+from .serializers import AuthorSerializer, FilmSerializer, SpectatorRegistrationSerializer, RatingSerializer
 
 class AuthorViewSet(mixins.ListModelMixin,       
                     mixins.RetrieveModelMixin,    
@@ -26,6 +26,32 @@ class AuthorViewSet(mixins.ListModelMixin,
                 status=status.HTTP_400_BAD_REQUEST
             )
         return super().destroy(request, *args, **kwargs)
+    
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def rate(self, request, pk=None):
+        """
+        Allow authenticated user to score a author
+        """
+        author = self.get_object()
+
+        try:
+            spectator = request.user.spectator
+        except Spectator.DoesNotExist:
+            return Response({'error': 'Only a spectator can rank a author'}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid():
+            score = serializer.validated_data['score']
+
+            AuthorRating.objects.update_or_create(
+                author=author,
+                spectator=spectator,
+                defaults={'score': score}
+            )
+            return Response({'status': 'score saved'}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class FilmViewSet(mixins.ListModelMixin,       
                     mixins.RetrieveModelMixin,    
@@ -61,6 +87,89 @@ class FilmViewSet(mixins.ListModelMixin,
             {'status': f"The movie'{film.title}' is correctly archived."},
             status=status.HTTP_200_OK
         )
+    
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def rate(self, request, pk=None):
+        """
+        Allow authenticated user to score a movie
+        """
+        film = self.get_object()
+
+        try:
+            spectator = request.user.spectator
+        except Spectator.DoesNotExist:
+            return Response({'error': 'Only a spectator can rank a movie'}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid():
+            score = serializer.validated_data['score']
+
+            FilmRating.objects.update_or_create(
+                film=film,
+                spectator=spectator,
+                defaults={'score': score}
+            )
+            return Response({'status': 'score saved'}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def add_favorite(self, request, pk=None):
+        """
+        Allow spectator to add movie to his favorite
+        """
+        film = self.get_object() 
+        
+        try:
+            spectator = request.user.spectator
+        except Spectator.DoesNotExist:
+            return Response({'error': 'Only a spectator can have favorite.'}, status=status.HTTP_403_FORBIDDEN)
+
+        spectator.favorite_movies.add(film)
+        
+        return Response(
+            {'status': f"Movie '{film.title}' added to favorites."},
+            status=status.HTTP_200_OK
+        )
+    
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def remove_favorite(self, request, pk=None):
+        """
+        Allow spectator to remove movie to his favorite
+        """
+        film = self.get_object() 
+        
+        try:
+            spectator = request.user.spectator
+        except Spectator.DoesNotExist:
+            return Response({'error': 'Only a spectator can have favorite.'}, status=status.HTTP_403_FORBIDDEN)
+
+        spectator.favorite_movies.remove(film)
+        
+        return Response(
+            {'status': f"Movie '{film.title}' removed from favorites."},
+            status=status.HTTP_200_OK
+        )
+    
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def list_favorite(self, request, pk=None):
+        """
+        Allow spectator to remove movie to his favorite
+        """
+        film = self.get_object() 
+        
+        try:
+            spectator = request.user.spectator
+        except Spectator.DoesNotExist:
+            return Response({'error': 'Only a spectator can have favorite.'}, status=status.HTTP_403_FORBIDDEN)
+
+        spectator.favorite_movies.remove(film)
+        
+        return Response(
+            {'status': f"Movie '{film.title}' removed from favorites."},
+            status=status.HTTP_200_OK
+        )
+
 
 class SpectatorRegistrationView(generics.CreateAPIView):
     """
@@ -85,3 +194,24 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+
+class FavoriteMoviesListView(generics.ListAPIView):
+    """
+    List favorite movie from on user
+    """
+    serializer_class = FilmSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        return only favorite movie and not all the Films queryset
+        """
+        user = self.request.user
+        
+        try:
+            spectator = user.spectator
+        except Spectator.DoesNotExist:
+            return Film.objects.none()
+
+        return spectator.favorite_movies.all()

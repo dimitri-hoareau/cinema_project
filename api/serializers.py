@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from core.models import Author, Film, User, Spectator
-
+from core.models import Author, Film, User, Spectator, EvaluationChoices
 class AuthorSerializer(serializers.ModelSerializer):
     """
     Serializer for Author model.
@@ -46,3 +45,9 @@ class SpectatorRegistrationSerializer(serializers.ModelSerializer):
             avatar=avatar_data
         )
         return user
+
+class RatingSerializer(serializers.Serializer):
+    """
+    Validate a choice on defined rank.
+    """
+    score = serializers.ChoiceField(choices=EvaluationChoices.choices)
