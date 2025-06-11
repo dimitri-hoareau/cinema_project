@@ -73,13 +73,16 @@ class Spectator(models.Model):
     Spectator Profile. Contains spectator-specific information.
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
-    name = models.CharField(max_length=255)
     bio = models.TextField(blank=True) 
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     favorite_movies = models.ManyToManyField('Film', blank=True)
 
     def __str__(self):
         return self.name
+    
+    @property
+    def name(self):
+        return self.user.username
 
 class AuthorRating(models.Model):
     """

@@ -1,8 +1,8 @@
-from rest_framework import viewsets,  mixins, status
+from rest_framework import viewsets,  mixins, status,generics, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from core.models import Author, Film
-from .serializers import AuthorSerializer, FilmSerializer
+from core.models import Author, Film, User
+from .serializers import AuthorSerializer, FilmSerializer, SpectatorRegistrationSerializer
 
 class AuthorViewSet(mixins.ListModelMixin,       
                     mixins.RetrieveModelMixin,    
@@ -60,3 +60,10 @@ class FilmViewSet(mixins.ListModelMixin,
             status=status.HTTP_200_OK
         )
 
+class SpectatorRegistrationView(generics.CreateAPIView):
+    """
+    Endpoint for creating a new Spectator.
+    """
+    queryset = User.objects.all()
+    serializer_class = SpectatorRegistrationSerializer
+    permission_classes = [permissions.AllowAny]
