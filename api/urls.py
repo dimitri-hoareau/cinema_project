@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import AuthorViewSet, FilmViewSet, SpectatorRegistrationView, LogoutView
+from .views import AuthorViewSet, FilmViewSet, SpectatorRegistrationView, LogoutView, FavoriteMoviesListView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -17,4 +17,5 @@ urlpatterns = [
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', SpectatorRegistrationView.as_view(), name='spectator-register'),
     path('auth/logout/', LogoutView.as_view(), name='auth_logout'),
+    path('spectator/favorites/', FavoriteMoviesListView.as_view(), name='list-favorite-movies'),
 ]

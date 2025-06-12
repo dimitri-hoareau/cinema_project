@@ -96,7 +96,7 @@ class FilmViewSet(mixins.ListModelMixin,
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def archive(self, request, pk=None):
         """
         custom method to archive a movie.
@@ -157,25 +157,6 @@ class FilmViewSet(mixins.ListModelMixin,
     
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def remove_favorite(self, request, pk=None):
-        """
-        Allow spectator to remove movie to his favorite
-        """
-        film = self.get_object() 
-        
-        try:
-            spectator = request.user.spectator
-        except Spectator.DoesNotExist:
-            return Response({'error': 'Only a spectator can have favorite.'}, status=status.HTTP_403_FORBIDDEN)
-
-        spectator.favorite_movies.remove(film)
-        
-        return Response(
-            {'status': f"Movie '{film.title}' removed from favorites."},
-            status=status.HTTP_200_OK
-        )
-    
-    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
-    def list_favorite(self, request, pk=None):
         """
         Allow spectator to remove movie to his favorite
         """

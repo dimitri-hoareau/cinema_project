@@ -12,7 +12,7 @@ class FilmSerializer(serializers.ModelSerializer):
     """
     Serializer for Film model.
     """
-    author = serializers.StringRelatedField()
+    author = AuthorSerializer()
 
     class Meta:
         model = Film

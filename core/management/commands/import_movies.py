@@ -32,6 +32,7 @@ class Command(BaseCommand):
                 writer_name = None
 
                 for member in crew_list:
+                    print(member)
                     if member.get('job') == 'Director':
                         director_name = member.get('name')
                         break 
@@ -48,6 +49,10 @@ class Command(BaseCommand):
                 # second step, get and create the movie with the related author
                 release_date_str = movie_data.get('release_date')
                 movie_status = StatusChoices.RELEASED 
+
+                vote_average = movie_data.get('vote_average', 0)
+                evaluation_score = int(round(vote_average / 2))
+
                 
 
                 release_date_obj = date.fromisoformat(release_date_str)
@@ -61,7 +66,8 @@ class Command(BaseCommand):
                         'description': movie_data.get('overview', ''),
                         'author': author_obj,
                         'status': movie_status,
-                        'source': SourceChoices.TMDB
+                        'source': SourceChoices.TMDB,
+                        'evaluation': evaluation_score
                     }
                 )
 
