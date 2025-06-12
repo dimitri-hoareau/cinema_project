@@ -9,6 +9,15 @@ class EvaluationChoices(models.IntegerChoices):
         FOUR = 4, '⭐⭐⭐⭐'
         FIVE = 5, '⭐⭐⭐⭐⭐'
 
+class StatusChoices(models.TextChoices):
+        RELEASED = 'released', 'Released'
+        PROJECT = 'project', 'Project'
+        ARCHIVED = 'archived', 'Archived'
+
+class SourceChoices(models.TextChoices):
+        ADMIN = 'admin', 'Admin' 
+        TMDB = 'tmdb', 'TMDb'
+
 class User(AbstractUser):
     """
     Base user model for authentication.
@@ -21,12 +30,7 @@ class Author(models.Model):
     Author Profile. Contains author-specific information.
     """
 
-    class SourceChoices(models.TextChoices):
-        ADMIN = 'admin', 'Admin' 
-        TMDB = 'tmdb', 'TMDb'
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     birth_date = models.DateField(null=True, blank=True)
     source = models.CharField(
         max_length=10,
@@ -42,10 +46,6 @@ class Film(models.Model):
     Film Profile. Contains film-specific information.
     """
 
-    class StatusChoices(models.TextChoices):
-        RELEASED = 'released', 'Released'
-        PROJECT = 'project', 'Project'
-        ARCHIVED = 'archived', 'Archived'
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='films')
     title = models.CharField(max_length=255)
@@ -62,6 +62,11 @@ class Film(models.Model):
     status = models.CharField(
         max_length=10,
         choices=StatusChoices.choices,
+    )
+    source = models.CharField(
+        max_length=10,
+        choices=SourceChoices.choices,
+        default=SourceChoices.ADMIN
     )
 
     def __str__(self):
