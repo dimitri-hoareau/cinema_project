@@ -6,7 +6,7 @@ class AuthorSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Author
-        fields = ['user_id', 'name', 'birth_date', 'source']
+        fields = ['id', 'name', 'birth_date', 'source']
 
 class FilmSerializer(serializers.ModelSerializer):
     """

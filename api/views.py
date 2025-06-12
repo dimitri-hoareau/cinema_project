@@ -16,8 +16,18 @@ class AuthorViewSet(mixins.ListModelMixin,
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned authors,
+        by filtering against a source parameter in the URL.
+        """
+        queryset = Author.objects.all()
+        source = self.request.query_params.get('source')
+        if source is not None:
+            queryset = queryset.filter(source=source)
+        return queryset
 
     def destroy(self, request, *args, **kwargs):
         author = self.get_object()
@@ -53,6 +63,7 @@ class AuthorViewSet(mixins.ListModelMixin,
             return Response({'status': 'score saved'}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class FilmViewSet(mixins.ListModelMixin,       
                     mixins.RetrieveModelMixin,    
@@ -63,8 +74,18 @@ class FilmViewSet(mixins.ListModelMixin,
     """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    queryset = Film.objects.all()
     serializer_class = FilmSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned Films,
+        by filtering against a source parameter in the URL.
+        """
+        queryset = Film.objects.all()
+        source = self.request.query_params.get('source')
+        if source is not None:
+            queryset = queryset.filter(source=source)
+        return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
