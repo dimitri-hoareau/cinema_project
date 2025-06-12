@@ -1,5 +1,0 @@
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjYyOTYyLCJpYXQiOjE3NDk2NjI2NjIsImp0aSI6IjUyMzMzNWRmNjMwYTRhOTY5ZGRiODNjZDNmODc2YzUzIiwidXNlcl9pZCI6Nn0.XIh_v2G9kE6cjIwN_VS5ewWVfckSrb-r9MrNRrD0Vc0" \
-  -d '{"score": 4}' \
-  http://localhost:8000/api/authors/2/rate/

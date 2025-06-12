@@ -14,6 +14,7 @@ class AuthorViewSet(mixins.ListModelMixin,
     """
     ViewSet for CRUD operation on author.
     """
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
@@ -60,6 +61,7 @@ class FilmViewSet(mixins.ListModelMixin,
     """
     ViewSet for CRUD operation on film.
     """
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
