@@ -11,7 +11,12 @@ const Navbar = () => {
         <li className="main-nav__item">
           <a href="/authors" className="main-nav__link">Authors</a>
         </li>
+
       </ul>
+      <div className="main-nav__auth">
+          <button>Connexion</button>
+          <button>Inscription</button>
+      </div>
     </nav>
   );
 };

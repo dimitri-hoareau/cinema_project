@@ -7,8 +7,6 @@ const Header = () => {
         <a href="/">CinéApp</a>
       </div>
       <Navbar />
-      <div className="site-header__auth-buttons">
-      </div>
     </header>
   );
 };
