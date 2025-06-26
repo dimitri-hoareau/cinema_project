@@ -1,0 +1,36 @@
+// src/styles/utils/_variables.scss
+
+// 1. Couleurs
+//-------------------------------------------------------------------
+$color-background: #121212;
+$color-accent: #E50914;
+$color-text-primary: #FFFFFF;
+$color-text-secondary: #8A8A8A;
+
+
+// 2. Polices d'écriture (Typographie)
+//-------------------------------------------------------------------
+$font-headings: 'Montserrat', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+// Tailles de police de base
+$font-size-base: 16px;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+// 4. Espacements (Spacing Scale)
+//-------------------------------------------------------------------
+$spacing-xs:  4px;
+$spacing-sm:  8px;
+$spacing-md:  16px; // Notre espacement de base
+$spacing-lg:  24px;
+$spacing-xl:  32px;
+$spacing-xxl: 48px;
+
+
+// 3. Points de rupture (Breakpoints) pour le design responsive
+//-------------------------------------------------------------------
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
