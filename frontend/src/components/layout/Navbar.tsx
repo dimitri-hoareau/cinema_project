@@ -14,8 +14,8 @@ const Navbar = () => {
 
       </ul>
       <div className="main-nav__auth">
-          <button>Connexion</button>
-          <button>Inscription</button>
+          <button>Login</button>
+          <button>Register</button>
       </div>
     </nav>
   );
