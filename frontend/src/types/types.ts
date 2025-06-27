@@ -1,10 +1,9 @@
-
-export interface Auteur {
+export interface Author {
   id: number;
   nom: string;
   email: string;
-  date_de_naissance: string; 
-  films?: Film[]; 
+  date_de_naissance: string;
+  films?: Film[];
 }
 
 export interface Film {
@@ -16,14 +15,14 @@ export interface Film {
   statut: string;
   source: string;
   created_at: string;
-  auteur_associe: Auteur; 
+  auteur_associe: Author;
 }
 
-export interface Spectateur {
+export interface Spectator {
   id: number;
   email: string;
   username: string;
   bio?: string;
-  avatar?: string; 
+  avatar?: string;
   films_favoris?: Film[];
 }

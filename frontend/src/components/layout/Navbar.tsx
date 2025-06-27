@@ -1,21 +1,32 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <nav className="main-nav">
       <ul className="main-nav__list">
         <li className="main-nav__item">
-          <a href="/" className="main-nav__link">Home</a>
+          <Link to="/" className="main-nav__link">
+            Home
+          </Link>
         </li>
         <li className="main-nav__item">
-          <a href="/films" className="main-nav__link">Films</a>
+          <Link to="/films" className="main-nav__link">
+            Films
+          </Link>
         </li>
         <li className="main-nav__item">
-          <a href="/authors" className="main-nav__link">Authors</a>
+          <Link to="/authors" className="main-nav__link">
+            Authors
+          </Link>
         </li>
-
       </ul>
       <div className="main-nav__auth">
-          <button>Login</button>
-          <button>Register</button>
+        <Link to="/login" className="button button--ghost">
+          Login
+        </Link>
+        <Link to="/register" className="button button--primary">
+          Register
+        </Link>
       </div>
     </nav>
   );
