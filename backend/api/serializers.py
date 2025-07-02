@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from core.models import Author, Film, User, Spectator, EvaluationChoices
 class AuthorSerializer(serializers.ModelSerializer):
     """
@@ -54,3 +55,15 @@ class RatingSerializer(serializers.Serializer):
     Validate a choice on defined rank.
     """
     score = serializers.ChoiceField(choices=EvaluationChoices.choices)
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Create a custom token with username.
+    """
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['username'] = user.username
+        
+        return token

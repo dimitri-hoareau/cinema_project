@@ -20,9 +20,15 @@ export interface Film {
 
 export interface Spectator {
   id: number;
-  email: string;
+  email?: string;
   username: string;
   bio?: string;
   avatar?: string;
   films_favoris?: Film[];
+}
+
+export interface MyJwtPayload {
+  user_id: number;
+  username: string;
+  exp: number;
 }

@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import authApi from "../api/authApi";
+import { registerUser } from "../api/authApi";
 import type { Spectator } from "../types/types";
 
 type RegisterFormInputs = Omit<Spectator, "id" | "films_favoris"> & {
@@ -15,7 +15,7 @@ const RegisterPage = () => {
   } = useForm<RegisterFormInputs>();
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
-    authApi(data);
+    registerUser(data);
     console.log("Data :", data);
   };
 

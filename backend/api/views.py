@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework_simplejwt.views import TokenObtainPairView
 from core.models import Author, Film, User, FilmRating, AuthorRating, Spectator
-from .serializers import AuthorSerializer, FilmSerializer, SpectatorRegistrationSerializer, RatingSerializer
-
+from .serializers import AuthorSerializer, FilmSerializer, SpectatorRegistrationSerializer, RatingSerializer,MyTokenObtainPairSerializer
 class AuthorViewSet(mixins.ListModelMixin,       
                     mixins.RetrieveModelMixin,    
                     mixins.UpdateModelMixin,      
@@ -219,3 +219,9 @@ class FavoriteMoviesListView(generics.ListAPIView):
             return Film.objects.none()
 
         return spectator.favorite_movies.all()
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    """
+    view for the custom token serializer
+    """
+    serializer_class = MyTokenObtainPairSerializer
