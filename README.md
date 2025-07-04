@@ -4,8 +4,8 @@ This project is a REST API developed with Django and Django REST Framework to ma
 
 ## Prerequisites
 
-* [Docker](https://www.docker.com/get-started)
-* [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Installation and Launch
 
@@ -55,7 +55,7 @@ This project is a REST API developed with Django and Django REST Framework to ma
     To populate the database with popular movies, run the custom import command.
 
     ```bash
-    docker-compose exec web python manage.py import_movies
+    docker-compose exec backend python manage.py import_movies
     ```
 
 ---
@@ -66,66 +66,66 @@ The base URL for all endpoints is `http://localhost:8000/api/`.
 
 ### Authentication (JWT)
 
-* **`POST /api/auth/login/`**: Obtain JWT tokens.
-    * **Body**: `{ "username": "your_username", "password": "your_password" }`
-* **`POST /api/auth/token/refresh/`**: Refresh an access token.
-    * **Body**: `{ "refresh": "your_refresh_token" }`
-* **`POST /api/auth/register/`**: Create a new Spectator account.
-    * **Permissions**: Open to all.
-* **`POST /api/auth/logout/`**: Log out (adds the refresh token to the blacklist).
-    * **Permissions**: Authenticated user.
-    * **Body**: `{ "refresh": "your_refresh_token" }`
+- **`POST /api/auth/login/`**: Obtain JWT tokens.
+  - **Body**: `{ "username": "your_username", "password": "your_password" }`
+- **`POST /api/auth/token/refresh/`**: Refresh an access token.
+  - **Body**: `{ "refresh": "your_refresh_token" }`
+- **`POST /api/auth/register/`**: Create a new Spectator account.
+  - **Permissions**: Open to all.
+- **`POST /api/auth/logout/`**: Log out (adds the refresh token to the blacklist).
+  - **Permissions**: Authenticated user.
+  - **Body**: `{ "refresh": "your_refresh_token" }`
 
 ### Authors (`/authors/`)
 
-* **`GET api/authors/`**: List all authors.
-    * **Permissions**: Read-only for all.
-    * **Filters (Query Params)**:
-        * `?source=tmdb`: Returns only authors imported from TMDb.
-        * `?source=admin`: Returns only manually created authors.
-* **`GET api/authors/{id}/`**: Retrieve details for an author.
-    * **Permissions**: Read-only for all.
-* **`PUT/PATCH api/authors/{id}/`**: Update an author.
-    * **Permissions**: Administrator or authenticated user (to be defined according to your rules).
-* **`DELETE api/authors/{id}/`**: Delete an author (only if they have no associated movies).
-    * **Permissions**: Administrator or authenticated user.
-* **`POST api/authors/{id}/rate/`**: Rate an author.
-    * **Permissions**: Authenticated spectator.
-    * **Body**: `{ "score": 5 }` (score from 1 to 5).
+- **`GET api/authors/`**: List all authors.
+  - **Permissions**: Read-only for all.
+  - **Filters (Query Params)**:
+    - `?source=tmdb`: Returns only authors imported from TMDb.
+    - `?source=admin`: Returns only manually created authors.
+- **`GET api/authors/{id}/`**: Retrieve details for an author.
+  - **Permissions**: Read-only for all.
+- **`PUT/PATCH api/authors/{id}/`**: Update an author.
+  - **Permissions**: Administrator or authenticated user (to be defined according to your rules).
+- **`DELETE api/authors/{id}/`**: Delete an author (only if they have no associated movies).
+  - **Permissions**: Administrator or authenticated user.
+- **`POST api/authors/{id}/rate/`**: Rate an author.
+  - **Permissions**: Authenticated spectator.
+  - **Body**: `{ "score": 5 }` (score from 1 to 5).
 
 ### Films (`/films/`)
 
-* **`GET api/films/`**: List all films.
-    * **Permissions**: Read-only for all.
-    * **Filters (Query Params)**:
-        * `?status=released`: Filter by status (values: `released`, `project`, `archived`).
-        * `?source=tmdb`: Filter by creation source (`tmdb` or `admin`).
-* **`GET api/films/{id}/`**: Retrieve details for a film.
-    * **Permissions**: Read-only for all.
-* **`PUT/PATCH api/films/{id}/`**: Update a film.
-    * **Permissions**: Administrator or authenticated user.
-* **`POST api/films/{id}/archive/`**: Archive a film.
-    * **Permissions**: Administrator or authenticated user.
-* **`POST api/films/{id}/rate/`**: Rate a film.
-    * **Permissions**: Authenticated spectator.
-    * **Body**: `{ "score": 4 }`
-* **`POST api/films/{id}/add_favorite/`**: Add a film to favorites.
-    * **Permissions**: Authenticated spectator.
-* **`POST api/films/{id}/remove_favorite/`**: Remove a film from favorites.
-    * **Permissions**: Authenticated spectator.
+- **`GET api/films/`**: List all films.
+  - **Permissions**: Read-only for all.
+  - **Filters (Query Params)**:
+    - `?status=released`: Filter by status (values: `released`, `project`, `archived`).
+    - `?source=tmdb`: Filter by creation source (`tmdb` or `admin`).
+- **`GET api/films/{id}/`**: Retrieve details for a film.
+  - **Permissions**: Read-only for all.
+- **`PUT/PATCH api/films/{id}/`**: Update a film.
+  - **Permissions**: Administrator or authenticated user.
+- **`POST api/films/{id}/archive/`**: Archive a film.
+  - **Permissions**: Administrator or authenticated user.
+- **`POST api/films/{id}/rate/`**: Rate a film.
+  - **Permissions**: Authenticated spectator.
+  - **Body**: `{ "score": 4 }`
+- **`POST api/films/{id}/add_favorite/`**: Add a film to favorites.
+  - **Permissions**: Authenticated spectator.
+- **`POST api/films/{id}/remove_favorite/`**: Remove a film from favorites.
+  - **Permissions**: Authenticated spectator.
 
 ### Favorites (`/favorites/`)
 
-* **`GET /api/spectator/favorites/`**: List the favorite films of the authenticated spectator.
-    * **Permissions**: Authenticated spectator.
+- **`GET /api/spectator/favorites/`**: List the favorite films of the authenticated spectator.
+  - **Permissions**: Authenticated spectator.
 
 ---
 
 ## Administration Interface
 
 The Django administration interface is available at `http://localhost:8000/admin/`.
-* **Login**: `admin`
-* **Password**: `admin`  
+
+- **Login**: `admin`
+- **Password**: `admin`
 
 Note: The entrypoint.sh script automatically creates this superuser for development convenience. This user should not be created automatically in a production environment.
-

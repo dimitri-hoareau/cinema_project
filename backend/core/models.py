@@ -1,4 +1,6 @@
 from django.conf import settings
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -50,6 +52,13 @@ class Film(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='films')
     title = models.CharField(max_length=255)
     description = models.TextField()
+    # poster_path = models.CharField(max_length=255, null=True, blank=True)
+    poster_original = models.ImageField(upload_to='posters/originals/', null=True, blank=True)
+    poster_thumbnail = ImageSpecField(source='poster_original',
+                                      processors=[ResizeToFill(200, 300)], 
+                                      format='JPEG',
+                                      options={'quality': 85})
+    backdrop_path = models.CharField(max_length=255, null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(
         auto_now_add=True, 

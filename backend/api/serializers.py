@@ -14,10 +14,25 @@ class FilmSerializer(serializers.ModelSerializer):
     Serializer for Film model.
     """
     author = AuthorSerializer()
+    poster_thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = Film
-        fields = ['id', 'author', 'title', 'description', 'release_date', 'evaluation', 'status']
+        fields = ['id', 'author', 'title', 'description', 'release_date', 'evaluation', 'status', 'poster_thumbnail', 'backdrop_path']
+
+    def get_poster_thumbnail(self, film_obj):
+        """
+        Get URL from poster
+        """
+        if film_obj.poster_original and hasattr(film_obj.poster_original, 'url'):
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(film_obj.poster_thumbnail.url)
+            return film_obj.poster_thumbnail.url
+
+        return None
+
+
 
 class SpectatorRegistrationSerializer(serializers.ModelSerializer):
     """

@@ -1,21 +1,23 @@
 export interface Author {
   id: number;
-  nom: string;
+  name: string;
   email: string;
-  date_de_naissance: string;
+  birth_date: string;
   films?: Film[];
 }
 
 export interface Film {
   id: number;
-  titre: string;
+  title: string;
   description: string;
-  date_de_sortie: string;
+  released_date: string;
   evaluation: number;
   statut: string;
   source: string;
   created_at: string;
-  auteur_associe: Author;
+  author: Author;
+  poster_thumbnail: string;
+  backdrop_path: string;
 }
 
 export interface Spectator {
