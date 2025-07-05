@@ -12,7 +12,7 @@ export interface Film {
   description: string;
   released_date: string;
   evaluation: number;
-  statut: string;
+  status: string;
   source: string;
   created_at: string;
   author: Author;
@@ -34,3 +34,11 @@ export interface MyJwtPayload {
   username: string;
   exp: number;
 }
+
+export const FilmStatus = {
+  RELEASED: "Released",
+  PROJECT: "Project",
+  ARCHIVED: "Archived",
+} as const;
+
+export type FilmStatusType = (typeof FilmStatus)[keyof typeof FilmStatus];
