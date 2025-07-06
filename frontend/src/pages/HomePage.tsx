@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { getFilms } from "../api/filmApi";
 import { FilmStatus } from "../types/types";
 import CustomSelector from "../components/ui/CustomSelector";
+import FilmCard from "../components/FilmCard";
+import "../styles/components/_film.scss";
 
 const HomePage = () => {
   const [films, setFilms] = useState<Film[]>([]);
@@ -19,14 +21,13 @@ const HomePage = () => {
   ];
 
   useEffect(() => {
-    alert("effect");
     const fetchFilms = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const data = await getFilms(filmStatus);
         setFilms(data);
-        console.log(films);
+        console.log(data);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -38,7 +39,7 @@ const HomePage = () => {
   }, [filmStatus]);
 
   return (
-    <div>
+    <div className="film-container">
       <h2>Movie list</h2>
       <CustomSelector<FilmStatusType | "">
         value={filmStatus}
@@ -51,17 +52,9 @@ const HomePage = () => {
       ) : error ? (
         <p>Error : {error}</p>
       ) : (
-        <ul>
-          {films.map((film: Film) => (
-            <li key={film.id}>
-              <h3>{film.title}</h3>
-              <p>{film.released_date}</p>
-              <p>{film.evaluation}</p>
-              <p>{film.status}</p>
-              <p>{film.author.name}</p>
-              <img src={film.poster_thumbnail} alt="poster film" />
-              <p>{film.description}</p>
-            </li>
+        <ul className="film-container__list">
+          {films.map((film) => (
+            <FilmCard key={film.id} film={film} />
           ))}
         </ul>
       )}

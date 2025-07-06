@@ -10,7 +10,7 @@ export interface Film {
   id: number;
   title: string;
   description: string;
-  released_date: string;
+  release_date: string;
   evaluation: number;
   status: string;
   source: string;

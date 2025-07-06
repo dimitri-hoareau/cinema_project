@@ -1,0 +1,34 @@
+@import "../utils/variables";
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-xxl $spacing-md;
+  min-height: 80vh;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 450px;
+  padding: $spacing-xl;
+  background-color: $color-surface;
+  border-radius: 8px;
+  border: 1px solid darken($color-background, 10%);
+
+  &__title {
+    text-align: center;
+    font-family: $font-headings;
+    font-size: 1.8rem;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__subtitle {
+    text-align: center;
+    color: $color-text-secondary;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: $spacing-xl;
+  }
+}

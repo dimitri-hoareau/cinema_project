@@ -1,6 +1,7 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { registerUser } from "../api/authApi";
 import type { Spectator } from "../types/types";
+import "../styles/components/_register-page.scss";
 
 type RegisterFormInputs = Omit<Spectator, "id" | "films_favoris"> & {
   password: string;

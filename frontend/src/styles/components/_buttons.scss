@@ -1,0 +1,32 @@
+@import "../utils/variables";
+
+.button {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: $font-weight-bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &--primary {
+    background-color: $color-accent;
+    color: white;
+
+    &:hover {
+      background-color: darken($color-accent, 10%);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: $color-text-primary;
+    border-color: $color-text-secondary;
+
+    &:hover {
+      background-color: rgba(white, 0.1);
+      border-color: $color-text-primary;
+    }
+  }
+}

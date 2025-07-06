@@ -1,0 +1,61 @@
+@import "../utils/variables";
+
+.film-card {
+  list-style: none;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, transparent 100%);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba($color-accent, 0.3);
+  }
+
+  &__link {
+    display: block;
+    text-decoration: none;
+  }
+
+  &__poster {
+    display: block;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    margin: auto;
+  }
+
+  &__overlay {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-end;
+    padding: $spacing-md;
+  }
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    &:first-child {
+      margin-bottom: $spacing-sm;
+    }
+    &--bottom {
+      margin-top: auto;
+    }
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  &__status,
+  &__date,
+  &__evaluation {
+    font-size: 0.8rem;
+    color: $color-text-secondary;
+  }
+}

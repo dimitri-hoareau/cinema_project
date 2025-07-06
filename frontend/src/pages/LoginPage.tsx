@@ -1,6 +1,7 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../api/authApi";
+import "../styles/components/_login-page.scss";
 
 type LoginFormInput = {
   username: string;

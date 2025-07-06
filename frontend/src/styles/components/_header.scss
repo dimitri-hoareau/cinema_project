@@ -1,0 +1,18 @@
+@import "../utils/variables";
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md $spacing-xl;
+  background-color: $color-background;
+  border-bottom: 1px solid #222;
+
+  &__logo a {
+    font-family: $font-headings;
+    font-size: 1.5rem;
+    color: $color-accent;
+    text-decoration: none;
+    font-weight: $font-weight-bold;
+  }
+}

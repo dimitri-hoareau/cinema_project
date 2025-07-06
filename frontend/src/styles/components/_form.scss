@@ -1,0 +1,35 @@
+@import "../utils/variables";
+
+.form-group {
+  margin-bottom: $spacing-lg;
+
+  label {
+    display: block;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+    font-size: 0.9rem;
+  }
+}
+
+.form-input {
+  width: 100%;
+  padding: $spacing-md;
+  background-color: $color-background;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: $color-text-primary;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.3);
+  }
+}
+
+.form-error {
+  color: $color-accent;
+  font-size: 0.875rem;
+  margin-top: $spacing-sm;
+}
