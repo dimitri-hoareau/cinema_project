@@ -35,5 +35,11 @@
     display: flex;
     align-items: center;
     gap: $spacing-md;
+
+    .main-nav__username {
+      color: $color-text-primary;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
   }
 }

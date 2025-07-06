@@ -18,6 +18,16 @@
       background-color: darken($color-accent, 10%);
     }
   }
+  &--secondary {
+    background-color: #333;
+    color: $color-text-secondary;
+    border-color: #444;
+
+    &:hover {
+      color: $color-text-primary;
+      border-color: $color-text-secondary;
+    }
+  }
 
   &--ghost {
     background-color: transparent;
