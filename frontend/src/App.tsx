@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import MovieDetailPage from "./pages/MovieDetailPage";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 
@@ -13,6 +15,15 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/films" element={<HomePage />} />
           <Route path="/films/:id" element={<MovieDetailPage />} />
+          {/* <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          /> */}
+          <Route path="/profile" element={<ProfilePage />} />
           {/* <Route path="/authors" element={<HomePage />} /> */}
           {/* <Route path="/authors/<id>" element={<HomePage />} /> */}
           <Route path="/login" element={<LoginPage />} />

@@ -1,5 +1,6 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import "../styles/components/_login-page.scss";
 
@@ -8,6 +9,7 @@ type LoginFormInput = {
   password: string;
 };
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { login } = useAuth();
   const {
     register,
@@ -16,8 +18,13 @@ const LoginPage = () => {
   } = useForm<LoginFormInput>();
 
   const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
-    const tokens = await loginUser(data);
-    login(tokens);
+    try {
+      const tokens = await loginUser(data);
+      login(tokens);
+      navigate("/profile");
+    } catch (error: any) {
+      console.error("Échec de la connexion", error);
+    }
   };
 
   return (

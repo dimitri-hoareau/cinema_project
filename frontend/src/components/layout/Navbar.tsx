@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/components/_navbar.scss";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <nav className="main-nav">
       <ul className="main-nav__list">
@@ -26,9 +33,11 @@ const Navbar = () => {
       <div className="main-nav__auth">
         {user ? (
           <>
-            <span className="main-nav__username">Bonjour, {user.username}</span>
+            <Link to="/profile" className="main-nav__link">
+              {user.username}
+            </Link>
 
-            <button onClick={logout} className="button button--secondary">
+            <button onClick={handleLogout} className="button button--secondary">
               Déconnexion
             </button>
           </>
