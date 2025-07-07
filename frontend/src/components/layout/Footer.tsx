@@ -3,7 +3,7 @@ const Footer = () => {
 
   return (
     <footer className="site-footer">
-      <p>&copy; {currentYear} CinéApp - All right reserved.</p>
+      <p>&copy; {currentYear} CinéApp - All rights reserved.</p>
     </footer>
   );
 };
